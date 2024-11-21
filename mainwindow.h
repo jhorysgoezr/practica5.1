@@ -26,7 +26,7 @@ private:
     personaje *miPersonaje;
     QGraphicsScene *scene;
     laberinto *miLaberinto; // Añadimos el laberinto
+    bool verificarColisionesPersonaje(QPointF direccion);
 };
 
 #endif // MAINWINDOW_H
-

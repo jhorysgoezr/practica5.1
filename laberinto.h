@@ -12,7 +12,7 @@ class laberinto {
 private:
     QVector<muro*> muros;
     QVector<QString> mapaLaberinto;
-    const int TAMANO_BLOQUE = 20;  // Tamaño de cada bloque del laberinto
+    const int TAMANO_BLOQUE = 18;  // Tamaño de cada bloque del laberinto
     QVector<Pildora*> pildoras; // Lista de píldoras
 
 
@@ -21,7 +21,7 @@ public:
     void cargarLaberintoDesdeTxt(const QString& nombreArchivo);
     void crearLaberintoDesdeMatriz(QGraphicsScene *scene);
     QVector<muro*> getMuros() const;
-      QVector<Pildora*> getPildoras() const;
+    QVector<Pildora*> getPildoras() const;
 
 
 private:

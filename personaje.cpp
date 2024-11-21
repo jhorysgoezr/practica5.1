@@ -22,34 +22,89 @@ QRectF personaje::boundingRect() const
 
 void personaje::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    //painter->setBrush(Qt::red);
-    //painter->drawRect(boundingRect());
+    painter->setBrush(Qt::red);
+    painter->drawRect(boundingRect());
 
-    QPixmap pxmap(":/pacman/pacman.png");
-    painter->drawPixmap(boundingRect(), pxmap,pxmap.rect());
+    //QPixmap pxmap(":/pacman/pacman.png");
+    //painter->drawPixmap(boundingRect(), pxmap,pxmap.rect());
 
 }
 
+QPointF personaje::obtenerPosicionActual() const
+{
+    return QPointF(x, y);
+}
+
+QPointF personaje::calcularNuevaPosicion(QPointF direccionMovimiento) const
+{
+    return QPointF(x + direccionMovimiento.x(), y + direccionMovimiento.y());
+}
+
+void personaje::actualizarPosicion(QPointF nuevaPosicion)
+{
+    x = nuevaPosicion.x();
+    y = nuevaPosicion.y();
+    setPos(x, y);
+}
+
+// Modificar los métodos de movimiento en personaje.cpp
 void personaje::MoverArriba()
 {
-    y=y-velocidad;
-    setPos(x,y);
+    QPointF direccion(0, -velocidad);
+    if (!verificarColision(direccion)) {
+        y = y - velocidad;
+        setPos(x, y);
+    }
 }
 
 void personaje::MoverAbajo()
 {
-    y=y+velocidad;
-    setPos(x,y);
+    QPointF direccion(0, velocidad);
+    if (!verificarColision(direccion)) {
+        y = y + velocidad;
+        setPos(x, y);
+    }
 }
 
 void personaje::MoverIzq()
 {
-    x=x-velocidad;
-    setPos(x,y);
+    QPointF direccion(-velocidad, 0);
+    if (!verificarColision(direccion)) {
+        x = x - velocidad;
+        setPos(x, y);
+    }
 }
 
 void personaje::MoverDer()
 {
-    x=x+velocidad;
-    setPos(x,y);
+    QPointF direccion(velocidad, 0);
+    if (!verificarColision(direccion)) {
+        x = x + velocidad;
+        setPos(x, y);
+    }
+}
+
+// personaje.cpp - Implementar los nuevos métodos
+bool personaje::verificarColision(QPointF direccionMovimiento)
+{
+    // Guardamos la posición actual
+    QPointF posicionOriginal = pos();
+
+    // Movemos temporalmente el personaje para verificar la colisión
+    setPos(pos() + direccionMovimiento);
+
+    QList<QGraphicsItem*> colisiones = collidingItems();
+    bool hayColision = false;
+
+    for (QGraphicsItem* item : colisiones) {
+        muro* paredColision = dynamic_cast<muro*>(item);
+        if (paredColision != nullptr) {
+            hayColision = true;
+            break;
+        }
+    }
+
+    // Restauramos la posición original
+    setPos(posicionOriginal);
+    return hayColision;
 }

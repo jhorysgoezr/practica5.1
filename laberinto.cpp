@@ -73,3 +73,5 @@ void laberinto::interpretarSimbolo(char simbolo, int x, int y, QGraphicsScene *s
 QVector<muro*> laberinto::getMuros() const {
     return muros;
 }
+
+

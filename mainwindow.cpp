@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     miLaberinto->cargarLaberintoDesdeTxt("C:\\Users\\lenovo\\Documents\\AppGUI\\build\\Desktop_Qt_6_5_3_MinGW_64_bit-Debug\\mapa.txt");
     miLaberinto->crearLaberintoDesdeMatriz(scene);
 
-    miPersonaje = new personaje(120, 150, 60, 80);
+    miPersonaje = new personaje(0, 12, 19, 19);
     ui->graphicsView->setScene(scene);
     scene->addItem(miPersonaje);
 }
@@ -20,6 +20,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+bool MainWindow::verificarColisionesPersonaje(QPointF direccion)
+{
+    return miPersonaje->verificarColision(direccion);
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
@@ -33,5 +38,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     else if (event -> key()==Qt::Key_A )
         miPersonaje ->MoverIzq();
 }
+
 
 
